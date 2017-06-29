@@ -1,0 +1,4 @@
+.idea/
+.vagrant/
+.molecule/
+extra_vars.sh

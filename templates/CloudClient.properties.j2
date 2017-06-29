@@ -1,0 +1,46 @@
+# CloudClient.Properties File used to automatically login to CloudClient and it should be located in the same directory as lib and bin folders.
+
+# Passwords can be provided or simply encrypted to a file, use command:
+# login keyfile --file mypass.txt --password mypaasword
+
+#vra_server : vRealize Automation Virtual Appliance
+vra_server={{ vra_server }}
+
+#vra_tenant : Tenant Name, defaults to vsphere.local
+vra_tenant={{ vra_tenant }}
+
+#vra_username : SSO username in the form user@domain.com
+vra_username={{ vra_username }}
+
+#vra_password : SSO password
+vra_password={{ vra_password }}
+
+#vra_keyfile : Encrypted file location of SSO password
+vra_keyfile=
+
+
+# Some Administrator level API calls required Windows Authentication to communicate to the vCAC Infrastructure Service Components
+
+#vra_iaas_server : Infrastructure Server (Windows Authentication), defaults to finding the name dynamically from vCAC
+vra_iaas_server={{ vra_iaas_server }}
+
+#vra_iaas_username : Windows username in the form user@domain
+vra_iaas_username={{ vra_iaas_username }}
+
+#vra_iaas_password : Windows password
+vra_iaas_password={{ vra_iaas_password }}
+
+#vra_iaas_keyfile : Encrypted file location of Windows password
+vra_iaas_keyfile=
+
+#vco_server : VirtualCenter Orchestrator Server
+vco_server={{ vco_server }}
+
+#vco_username : Username
+vco_username={{ vco_username }}
+
+#vco_password : Password
+vco_password={{ vco_password }}
+
+#vco_keyfile : Encrypted file location of VCO password
+vco_keyfile=

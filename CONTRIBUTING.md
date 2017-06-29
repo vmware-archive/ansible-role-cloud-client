@@ -1,5 +1,3 @@
-
-
 # Contributing to ansible-role-cloud-client
 
 The ansible-role-cloud-client project team welcomes contributions from the community. If you wish to contribute code and you have not

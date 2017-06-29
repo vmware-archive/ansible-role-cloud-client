@@ -1,0 +1,40 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: vagrant
+vagrant:
+  platforms:
+    - name: centos/7
+      box: centos/7
+      box_url: https://app.vagrantup.com/centos/boxes/7/versions/1705.02/providers/virtualbox.box
+  providers:
+    - name: virtualbox
+      type: virtualbox
+      options:
+        memory: 512
+        cpus: 2
+  instances:
+    - name: ansible-role-cloud-client
+      ansible_groups:
+        - group1
+verifier:
+  name: serverspec
+ansible:
+  extra_vars:
+    cloudclient_url: ${CLOUDCLIENT_URL}
+    cloudclient_checksum: ${CLOUDCLIENT_CHECKSUM}
+    cloudclient_patch_url: ${CLOUDCLIENT_PATCH_URL}
+    cloudclient_patch_checksum: ${CLOUDCLIENT_PATCH_CHECKSUM}
+    cloudclient_url_username: ${CLOUDCLIENT_URL_USERNAME}
+    cloudclient_url_password: ${CLOUDCLIENT_URL_PASSWORD}
+    vra_server: ${VRA_SERVER}
+    vra_tenant: ${VRA_TENANT}
+    vra_username: ${VRA_USERNAME}
+    vra_password: ${VRA_PASSWORD}
+    vra_iaas_server: ${VRA_IAAS_SERVER}
+    vra_iaas_username: ${VRA_IAAS_USERNAME}
+    vra_iaas_password: ${VRA_IAAS_PASSWORD}
+    vco_server: ${VCO_SERVER}
+    vco_username: ${VCO_USERNAME}
+    vco_password: ${VCO_PASSWORD}

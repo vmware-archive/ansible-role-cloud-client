@@ -1,0 +1,66 @@
+# Copyright 2017 VMware, Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: https://spdx.org/licenses/MIT.html
+#
+# This product is licensed to you under the MIT license (the "License").
+# You may not use this product except in compliance with the MIT License.
+#
+# This product may include a number of subcomponents with separate copyright
+# notices and license terms. Your use of these subcomponents is subject to
+# the terms and conditions of the subcomponent's license, as noted in the
+# LICENSE file.
+
+- include: setup_rhel.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+
+- name: download-cloudclient
+  get_url:
+    url: "{{ cloudclient_url }}"
+    dest: "{{ cloudclient_install_dir }}/cloudclient.zip"
+    checksum: "{{ cloudclient_checksum }}"
+    url_username: "{{ cloudclient_url_username }}"
+    url_password: "{{ cloudclient_url_password }}"
+
+- name: unarchive-cloudclient
+  unarchive:
+    src: "{{ cloudclient_install_dir }}/cloudclient.zip"
+    dest: "{{ cloudclient_install_dir }}"
+    remote_src: true
+
+- include: install_patch.yml
+  when: '"4.3.0" in cloudclient_build'
+
+- name: setup-cloudclient-properties
+  template:
+    src: templates/CloudClient.properties.j2
+    dest: "{{ cloudclient_home }}/CloudClient.properties"
+
+- name: create cloudclient config dir
+  file:
+    state: directory
+    path: "~/.cloudclient"
+
+- name: setup-cloudclient-config
+  template:
+    src: templates/cloudclient.config.j2
+    dest: "~/.cloudclient/cloudclient.config"
+
+- name: verify cloudclient vra setup
+  command: |
+    {{ cloudclient_home }}/bin/cloudclient.sh vra login isauthenticated catalog
+  register: cloudclient_vra_verify_command
+
+- name: fail if unable to connect vra cloudclient
+  fail:
+    msg: "Unable to connect vra via cloudclient: {{ cloudclient_verify_command.stdout }}"
+  when: "'true' not in cloudclient_vra_verify_command.stdout"
+
+- name: verify vro cloudclient setup
+  command: |
+    {{ cloudclient_home }}/bin/cloudclient.sh vco login isauthenticated
+  register: cloudclient_vro_verify_command
+
+- name: fail if unable to connect vro cloudclient
+  fail:
+    msg: "Unable to connect vro via cloudclient: {{ vro_cloudclient_verify_command.stdout }}"
+  when: "'login: [ACTIVE]' not in cloudclient_vro_verify_command.stdout"

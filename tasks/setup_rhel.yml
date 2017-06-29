@@ -1,0 +1,32 @@
+# Copyright 2017 VMware, Inc. All Rights Reserved.
+#
+# SPDX-License-Identifier: https://spdx.org/licenses/MIT.html
+#
+# This product is licensed to you under the MIT license (the "License").
+# You may not use this product except in compliance with the MIT License.
+#
+# This product may include a number of subcomponents with separate copyright
+# notices and license terms. Your use of these subcomponents is subject to
+# the terms and conditions of the subcomponent's license, as noted in the
+# LICENSE file.
+
+- name: install yum packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - wget
+    - unzip
+    - zip
+
+- name: download java rpm
+  get_url:
+    url: http://download.oracle.com/otn-pub/java/jdk/8u131-b11/d54c1d3a095b4ff2b6607d096fa80163/jdk-8u131-linux-x64.rpm
+    dest: /tmp/jdk-8u131-linux-x64.rpm
+    headers: 'Cookie: oraclelicense=accept-securebackup-cookie'
+    validate_certs: no
+
+- name: install java
+  yum:
+    name: /tmp/jdk-8u131-linux-x64.rpm
+    state: present
