@@ -1,3 +1,6 @@
+# Copyright 2017 VMware, Inc.  All rights reserved.
+# SPDX-License-Identifier: MIT OR GPL-3.0-only
+
 export CLOUDCLIENT_URL='https://hosted.artifactrepo/VMware_vRealize_CloudClient-4.3.0-4665091.zip'
 export CLOUDCLIENT_CHECKSUM='sha256:CCSHA256SUM'
 export CLOUDCLIENT_PATCH_URL='https://hosted.artifactrepo/javax.ws.rs-api-2.0.1.jar.gz'
